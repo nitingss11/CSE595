@@ -30,7 +30,7 @@ public class Solution {
 
         //A has to be a even length array for us to return tieBreaker
         //If all the elements gets discarded in an even length array, 
-        //.. that means there was no majority, so return the tieBreaker
+        //.. that means we tieBreaker, which is either the majorityElement if present or -1 if majorityElement isnt present
         boolean isAEven = !isAOdd;
         if(B.isEmpty() && isAEven) {
             return tieBreaker;
