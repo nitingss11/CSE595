@@ -28,12 +28,20 @@ public class MajorityMultipass {
         }
 
         /**
-         * Code according to the pseudocode
+         * Code according to the pseudocode - old version
          *      if(B.isEmpty()) {
          *          return tieBreaker;
          *      }
          *
-         * Modification #1
+         * Code according to the pseudocode - new version (which still fails for input [1, 2, 3]
+         *         int c;
+         *         if(B.isEmpty()) {
+         *             c = tieBreaker;
+         *         } else {
+         *             c = majorityMultipass(B, tieBreaker);
+         *         }
+         *
+         * My modification - adding and extra check of !isAOdd below
          * Need to also check here that the List A should not be of odd length
          * Because if A was of odd length, then by returning the tieBreaker, we miss processing of the tieBreaker element
          * that if the tieBreaker was the majority or not by executing the countOccurrences method on it
@@ -59,11 +67,15 @@ public class MajorityMultipass {
          *             return c;
          *      }
          *
-         * Modification #2
+         * My modification - adding and extra check of !isAOdd below
          * For the second part of the if condition, Need to also check here that the List A should not be of odd length
-         * This is because now with the addition of Modification #1, count contains the instance of tieBreaker, for
+         * This is because now with the addition of the above modification, count contains the instance of tieBreaker, for
          * cases when the length of the List A is odd.
+         * Basic intuition : For odd A - we extract the tiebreaker from A, so the count variable already contains the
+         * count of the instance of tiebreaker, so we do not want to check the second half of the OR condition for odd A's
          * So when A's length is odd, the count has to be greater than n/2
+         * While, for even A's, we get the tiebreaker from previous methods, which is not a part of the current A originally,
+         * And the second half of the condition below is valid for those cases.
          */
         if(count > n/2 || (!isAOdd && count==n/2 && c==tieBreaker)) {
             return c;
@@ -88,8 +100,16 @@ public class MajorityMultipass {
         int ans1 = findMajority(nums1, 3);
         System.out.println(ans1);
 
+        int[] nums4 = new int[]{1, 1, 2, 2, 3};
+        int ans4 = findMajority(nums4, 5);
+        System.out.println(ans4);
+
         int[] nums2 = new int[]{1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2};
         int ans2 = findMajority(nums2, 11);
         System.out.println(ans2);
+
+        int[] nums3 = new int[]{2, 2, 2, 3, 4};
+        int ans3 = findMajority(nums3, 5);
+        System.out.println(ans3);
     }
 }
