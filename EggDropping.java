@@ -206,5 +206,34 @@ public class EggDropping {
         return res;
     }
 
+    private static int[][] solveMinEggsPy(int n, int d) {
+        int[][] minEggs = new int[n + 1][d + 1];
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= d; j++) {
+                if (i == 0) {
+                    minEggs[i][j] = 0;
+                } else if (j >= i) {
+                    minEggs[i][j] = 1;
+                } else {
+                    double val = (Math.log(i + 1) / Math.log(2));
+                    if (j < val) {
+                        minEggs[i][j] = 9999;
+                    } else {
+                        int min_eggs = i;
+                        for (int x = 1; x <= i; x++) {
+                            int x_eggs = Math.max(1 + minEggs[x - 1][j - 1], minEggs[i - x][j - 1]);
+                            min_eggs = Math.min(x_eggs, min_eggs);
+                        }
+                        minEggs[i][j] = min_eggs;
+                    }
+                }
+            }
+        }
+        return minEggs;
+    }
+
+
+
 
 }
